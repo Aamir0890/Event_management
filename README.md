@@ -38,11 +38,162 @@ This is a robust and scalable event management system built with Node.js and Exp
 3. **Start Server**:
  `node app.js`
 
+## API Endpoints
 
 ### User Registration and Login
 
-- `POST api/register`: Register a new user.
+- `POST /api/register`: Register a new user.
+  - **Request Body**:
+    ```json
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "Password123!",
+      "role": "user"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "User registered successfully"
+    }
+    ```
 
-- `POST api/login`: Log in a user.
+- `POST /api/login`: Log in a user.
+  - **Request Body**:
+    ```json
+    {
+      "email": "john.doe@example.com",
+      "password": "Password123!"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "token": "jwt_token"
+    }
+    ```
 
+### Event Management
 
+- `POST /api/events`: Create a new event (Admin only).
+  - **Request Headers**:
+    ```json
+    {
+      "Authorization": "Bearer jwt_token"
+    }
+    ```
+  - **Request Body**:
+    ```json
+    {
+      "id": 1,
+      "date": "2023-06-15",
+      "time": "18:00",
+      "description": "Company Annual Meetup",
+      "participants": []
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "Event created successfully"
+    }
+    ```
+
+- `GET /api/events`: Get all events.
+  - **Request Headers**:
+    ```json
+    {
+      "Authorization": "Bearer jwt_token"
+    }
+    ```
+  - **Response**:
+    ```json
+    [
+      {
+        "id": 1,
+        "date": "2023-06-15",
+        "time": "18:00",
+        "description": "Company Annual Meetup",
+        "participants": []
+      }
+    ]
+    ```
+
+- `GET /api/events/:id`: Get event by ID.
+  - **Request Headers**:
+    ```json
+    {
+      "Authorization": "Bearer jwt_token"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "id": 1,
+      "date": "2023-06-15",
+      "time": "18:00",
+      "description": "Company Annual Meetup",
+      "participants": []
+    }
+    ```
+
+- `PUT /api/events/:id`: Update an existing event (Admin only).
+  - **Request Headers**:
+    ```json
+    {
+      "Authorization": "Bearer jwt_token"
+    }
+    ```
+  - **Request Body**:
+    ```json
+    {
+      "date": "2023-06-16",
+      "time": "19:00",
+      "description": "Updated Company Annual Meetup",
+      "participants": []
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "Event updated successfully"
+    }
+    ```
+
+- `DELETE /api/events/:id`: Delete an existing event (Admin only).
+  - **Request Headers**:
+    ```json
+    {
+      "Authorization": "Bearer jwt_token"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "Event deleted successfully"
+    }
+    ```
+
+### Event Registration
+
+- `POST /api/events/:id/register`: Register a user for an event.
+  - **Request Headers**:
+    ```json
+    {
+      "Authorization": "Bearer jwt_token"
+    }
+    ```
+  - **Request Body**:
+    ```json
+    {
+      "userId": 1
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "message": "User registered for event and confirmation email sent"
+    }
+    ```
+    
